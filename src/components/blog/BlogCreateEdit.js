@@ -43,21 +43,24 @@ function BlogCreateEdit() {
                                 <Form.Check className="me-3" type="radio" label="No" />
                             </Form.Group>
 
-                            <Form.Group className="mb-3" controlId="formGridState">
-                                <Form.Label className='mx-3'>Loại</Form.Label>
+                            <Form.Group className="mb-3 chosen-box" controlId="formGridState">
+                                <Form.Label className='mx-3 mb-6'>Loại</Form.Label>
                                 <Form.Select className="mx-3" defaultValue="Choose...">
                                     <option>Choose</option>
                                     <option>1</option>
                                     <option>2</option>
-
                                 </Form.Select>
+                                <Form.Label className='mx-3 mb-6'>Date Public</Form.Label>
+                                <Form.Control className='mx-3' type='date' />
                             </Form.Group>
 
-
-                            <Button variant="primary" type="submit">
-                                Submit
-                            </Button>
                         </Form>
+                    </div>
+                    <div className='block-footer p-3'>
+                        <Button variant="success">Success</Button>{' '}
+                        <Button variant="primary" type="submit">
+                            Submit
+                        </Button>
                     </div>
                 </div>
             </div>

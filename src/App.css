@@ -261,3 +261,17 @@ a {
 .form-select {
     width: 96% !important;
 }
+
+.chosen-box {
+    display: flex;
+    width: 100%;
+}
+
+.block-footer {
+    text-align: center;
+}
+
+.bouced-in {
+    text-align: center;
+    color: #ffffff;
+}
