@@ -1,5 +1,6 @@
 import '../App.css';
 import BlogCreateEdit from './blog/BlogCreateEdit';
+import BlogList from './blog/BlogList';
 import BlogSearchForm from './blog/BlogSearchForm';
 
 function AppMenu() {
@@ -41,7 +42,7 @@ function AppMenu() {
                 </ul>
             </div>
             <div className="right-body">
-                <BlogCreateEdit/>
+                <BlogCreateEdit />
             </div>
         </div>
     );
