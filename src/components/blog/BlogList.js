@@ -1,8 +1,13 @@
 import { Table, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState, useEffect } from 'react';
+import axios from 'axios';
+import editBlog from './BlogCreateEdit';
+import BlogCreateEdit from './BlogCreateEdit';
+import { Route, Recipe, Link } from "react-router-dom";
 
 function BlogList() {
+    const baseURL = "http://localhost:3000/blogs";
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState([]);
 
@@ -10,7 +15,11 @@ function BlogList() {
     // this useEffect will run once
     // tương tự với componentDidMount()
     useEffect(() => {
-        fetch("http://localhost:3000/blogs")
+        getBlogList()
+    }, [])
+
+    const getBlogList = () => {
+        fetch(`${baseURL}`)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -18,7 +27,33 @@ function BlogList() {
                     setItems(result);
                 }
             )
-    }, [])
+    }
+
+    /**
+     * Delete blog
+     */
+    const deleteBlog = (id) => {
+        axios
+            .delete(`${baseURL}/${id}`)
+            .then((res) => {
+                getBlogList()
+            })
+            .catch((error) => console.log(error)
+            );
+    };
+
+    /**
+     * Get blogId
+     */
+    const getBlogId = (id) => {
+        axios
+            .put(`${baseURL}/?q=${id}`)
+            .then((res) => {
+                console.log(id);
+            })
+            .catch((error) => console.log(error)
+            );
+    }
 
     if (!isLoaded) {
         return <h2>Loading...</h2>
@@ -52,10 +87,12 @@ function BlogList() {
                                         <td>{item.position}</td>
                                         <td>{item.data_pubblic}</td>
                                         <td>
-                                            <Button variant="primary">Edit</Button>
+                                            <Link to={`new/`+item.id}>
+                                                <Button variant="primary" onClick={() => { getBlogId(item.id) }}>Edit</Button>
+                                            </Link>
                                         </td>
                                         <td>
-                                            <Button variant="danger">Delete</Button>
+                                            <Button variant="danger" onClick={() => { deleteBlog(item.id) }}>Delete</Button>
                                         </td>
                                     </tr>
                                 ))}
@@ -63,7 +100,7 @@ function BlogList() {
                         </Table>
                     </div>
                 </div>
-            </div>
+            </div >
         );
     }
 }

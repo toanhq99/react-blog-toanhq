@@ -128,7 +128,7 @@ p {
     padding-right: 0;
     padding-left: 0;
     min-height: calc(100vh - 66px);
-    height: 100%;
+    height: auto;
     background: #ffffff;
 }
 
