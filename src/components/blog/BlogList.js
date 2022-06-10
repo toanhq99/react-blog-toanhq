@@ -10,6 +10,7 @@ function BlogList() {
     const baseURL = "http://localhost:3000/blogs";
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState([]);
+    const [id, setId] = useState("");
 
     // Note: the empty deps array [] means
     // this useEffect will run once
@@ -47,9 +48,10 @@ function BlogList() {
      */
     const getBlogId = (id) => {
         axios
-            .put(`${baseURL}/?q=${id}`)
+            .get(`${baseURL}/${id}`)
             .then((res) => {
-                console.log(id);
+                setId(res.data.id);
+                console.log(res.data.id);
             })
             .catch((error) => console.log(error)
             );
