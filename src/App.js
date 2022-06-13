@@ -5,12 +5,11 @@ import AppMenu from './components/AppMenu';
 
 function App() {
   return (
-    <div className="App">
+    <div className="App" >
       <AppHeader />
       <AppMenu />
       <AppFooter />
     </div>
   );
 }
-
 export default App;

@@ -7,10 +7,19 @@ import BlogCreateEdit from './BlogCreateEdit';
 import { Route, Recipe, Link } from "react-router-dom";
 
 function BlogList() {
-    const baseURL = "http://localhost:3000/blogs";
+    const baseURL = "http://localhost:8000/api/blog";
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState([]);
     const [id, setId] = useState("");
+    const [blogs, setBlogs] = useState([]);
+
+    const getBlogList = async () => {
+        const {data} = await axios.get(`${baseURL}/get/all`);
+        const blog = data;
+        setBlogs(blog);
+        console.log(blog);
+        console.log(blogs);
+    };
 
     // Note: the empty deps array [] means
     // this useEffect will run once
@@ -19,18 +28,7 @@ function BlogList() {
         getBlogList()
     }, [])
 
-    const getBlogList = () => {
-        fetch(`${baseURL}`)
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    setIsLoaded(true);
-                    setItems(result);
-                }
-            )
-    }
-
-    /**
+    /**blogs
      * Delete blog
      */
     const deleteBlog = (id) => {
@@ -51,7 +49,6 @@ function BlogList() {
             .get(`${baseURL}/${id}`)
             .then((res) => {
                 setId(res.data.id);
-                console.log(res.data.id);
             })
             .catch((error) => console.log(error)
             );
@@ -80,16 +77,16 @@ function BlogList() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {items.map((item) => (
+                                {blogs.map((item) => (
                                     <tr key={item.id}>
                                         <td>{item.id}</td>
                                         <td>{item.title}</td>
                                         <td>{item.category}</td>
-                                        <td>{item.false}</td>
+                                        <td>{item.isPublic}</td>
                                         <td>{item.position}</td>
-                                        <td>{item.data_pubblic}</td>
+                                        <td>{item.dataPublic}</td>
                                         <td>
-                                            <Link to={`new/`+item.id}>
+                                            <Link to={`new/` + item.id}>
                                                 <Button variant="primary" onClick={() => { getBlogId(item.id) }}>Edit</Button>
                                             </Link>
                                         </td>

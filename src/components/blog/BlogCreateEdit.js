@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import { getByTitle } from '@testing-library/react';
+import Validator from '../Validator';
 
 function BlogCreateEdit() {
     const baseURL = "http://localhost:3000/blogs";
@@ -15,7 +15,40 @@ function BlogCreateEdit() {
     const [pubiasdasc, setPublic] = useState(false);
     const [data_pubblic, setDataPubblic] = useState("");
     const [position, setPosition] = useState([]);
+    const [errors, setErrors] = useState({});
     const { id } = useParams();
+
+    const requiredWith = (value, field, state) => (!state[field] && !value) || !!value;
+
+    const rules = [
+        {
+            field: 'title',
+            method: 'isEmpty',
+            validWhen: false,
+            message: 'The title field is required.',
+        },
+        {
+            field: 'des',
+            method: 'isEmpty',
+            validWhen: false,
+            message: 'The desciption field is required.',
+        },
+        {
+            field: 'detail',
+            method: 'isEmpty',
+            validWhen: false,
+            message: 'The detail field is required.',
+        },
+        {
+            field: 'message',
+            method: requiredWith,
+            args: ['subject'],
+            validWhen: true,
+            message: 'The message field is required when subject is present.',
+        },
+    ];
+
+    const validator = new Validator(rules);
 
     const handlePosition = event => {
         let newArray = [...position, event.target.value];
@@ -44,6 +77,9 @@ function BlogCreateEdit() {
             data_pubblic: e.target.data_pubblic.value,
             position: e.target.position.value
         }
+
+        setErrors(validator.validate(this.state))
+
         console.log(blog);
         if (id) {
             setTitle(oldBlog.title)
@@ -91,6 +127,7 @@ function BlogCreateEdit() {
                             <Form.Group className="mb-3" controlId="formBasicEmail">
                                 <Form.Label className='mt-2 ms-3'>Tiêu đề: </Form.Label>
                                 <Form.Control className='mx-3' name="title" defaultValue={oldBlog.title} />
+                                {errors.title && <div className="validation" style={{display: 'block'}}>{errors.title}</div>}
                             </Form.Group>
 
                             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">

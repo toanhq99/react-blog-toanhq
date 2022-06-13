@@ -1,12 +1,12 @@
 {
   "blogs": [
     {
-      "title": "",
-      "des": "",
-      "detail": "",
-      "category": "Choose",
-      "public": "false",
-      "data_pubblic": "",
+      "title": "egrege",
+      "des": "rgerger",
+      "detail": "egegeg",
+      "category": "2",
+      "public": "true",
+      "data_pubblic": "2022-06-16",
       "position": "",
       "id": 15
     },
